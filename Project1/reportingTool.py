@@ -45,10 +45,12 @@ def getPopularAuthors( ):
 def getDaysWithErrors( ):
  print("This is the function that returns days with 1% errors ")
  db = psycopg2.connect(database=DBNEWS)
+
  #c = db.cursor()
  #c.execute("")
  #db.close()
 #print("Got the Errors")
+#select count(status), substring(status,1,3) from log group by status;
 
 
 
