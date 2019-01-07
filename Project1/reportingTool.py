@@ -50,7 +50,7 @@ def getDaysWithErrors( ):
  #c.execute("")
  #db.close()
 #print("Got the Errors")
-#select count(status), substring(status,1,3) from log group by status;
+#select count(status), substring(status,1,3) as "HTTP Code", time::timestamp::date as "Date" from log group by status, time::timestamp::date;
 
 
 
