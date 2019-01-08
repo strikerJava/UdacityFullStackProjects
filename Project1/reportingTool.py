@@ -7,52 +7,55 @@ DBNEWS = "news"
 
 def getPopularArticles( ):
  #get the three most popular articles
- print("This is the popular Article Function")
+ print("Fetching the top three articles")
  db = psycopg2.connect(database=DBNEWS)
  c = db.cursor()
-# c.execute("SELECT SUBSTRING(path, 10 , LENGTH(path)-1), COUNT(path) FROM log WHERE path LIKE '/a%'  GROUP BY path ORDER BY COUNT(path) DESC;")
-
  c.execute("SELECT articles.title, COUNT(path) FROM articles, log WHERE articles.slug = (SUBSTRING(path, 10 , LENGTH(path)-1))  GROUP BY articles.title ORDER BY COUNT(path) DESC LIMIT 3;")
- #SELECT slug, title from articles; gets slug to match to path without
- #above gets the
+ result = c.fetchall();
+ print "The most popular articles"
+ print "------------------------"
+ print 'Article 1: ' + str(result[0][0]) + ' with ' + str(result[0][1]) + ' Hits!'
+ print 'Article 2: ' + str(result[1][0]) + ' with ' + str(result[1][1]) + ' Hits!'
+ print 'Article 3: ' + str(result[2][0]) + ' with ' + str(result[2][1]) + ' Hits!'
+ print "------------------------"
  db.close()
  print("Got the Articles")
 
 
 def getPopularAuthors( ):
- print("This is the popular Author Function")
- #select COUNT(articles.author), authors.name  from articles, authors where articles.author = authors.id GROUP BY authors.name;
- #above gets
- # SELECT articles.author, COUNT(author)
- #FROM articles, log
- #WHERE articles.slug = (SUBSTRING(path, 10 , LENGTH(path)-1))
- #GROUP BY articles.author ORDER BY COUNT(path) DESC;
- #SELECT authors.name, COUNT(author)
-    #FROM authors, articles, log
-    #WHERE articles.slug = (SUBSTRING(path, 10 , LENGTH(path)-1))
-    #AND authors.id = articles.author GROUP BY authors.name ORDER BY COUNT(path) DESC;
- #gets it I think
- #select authors.name, articles.title FROM articles, authors  where authors.id = articles.author;
- #gets who wrote which article
- #gets count of author hits
+ print("Fetching the most popular authors")
  db = psycopg2.connect(database=DBNEWS)
  c = db.cursor()
  c.execute("SELECT authors.name, COUNT(author) FROM authors, articles, log WHERE articles.slug = (SUBSTRING(path, 10 , LENGTH(path)-1)) AND authors.id = articles.author GROUP BY authors.name ORDER BY COUNT(path) DESC;")
+ result = c.fetchall()
  db.close()
- print("Got the Authors")
+ print "The most popular Authors"
+ print "------------------------"
+ print 'Author 1: ' + str(result[0][0]) + ' with ' + str(result[0][1]) + ' Hits!'
+ print 'Author 2: ' + str(result[1][0]) + ' with ' + str(result[1][1]) + ' Hits!'
+ print 'Author 3: ' + str(result[2][0]) + ' with ' + str(result[2][1]) + ' Hits!'
+ print 'Author 4: ' + str(result[3][0]) + ' with ' + str(result[3][1]) + ' Hits!'
+ print "------------------------"
+
 
 
 def getDaysWithErrors( ):
- print("This is the function that returns days with 1% errors ")
  db = psycopg2.connect(database=DBNEWS)
 
- #c = db.cursor()
- #c.execute("")
- #db.close()
-#print("Got the Errors")
+ c = db.cursor()
+ c.execute('select count(status), substring(status,1,3) as "HTTP Code", time::timestamp::date as "Date" from log group by status, time::timestamp::date order by time::timestamp::date;')
+ db.close()
+#select count(status), substring(status,1,3) as "HTTP Code", time::timestamp::date as "Date" from log group by status, time::timestamp::date order by time::timestamp::date;
 #select count(status), substring(status,1,3) as "HTTP Code", time::timestamp::date as "Date" from log group by status, time::timestamp::date order by time::timestamp::date;
 
+#select time::timestamp::date, count(g) * 100.0 / sum(count(*)) over()
+#from log
+#group by time::timestamp::date
 
+#SELECT time::timestamp::date, count(status) AS totalCode,
+#(select COUNT(substring(status,1,3)) FROM log WHERE substring(status,1,3) == 404) AS ErorCode
+#FROM log
+#GROUP BY time::timestamp::date;
 
 getPopularArticles()
 getPopularAuthors()
