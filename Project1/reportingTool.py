@@ -34,22 +34,13 @@ def getPopularAuthors():
     print 'Author 4: ' + str(result[3][0]) + ' with ' + str(result[3][1]) + ' Hits!'
     print "------------------------"
 
+
 def getDaysWithErrors():
     db = psycopg2.connect(database=DBNEWS)
     c = db.cursor()
     c.execute('select count(status), substring(status,1,3) as "HTTP Code", time::timestamp::date as "Date" from log group by status, time::timestamp::date order by time::timestamp::date;')
     db.close()
-#select count(status), substring(status,1,3) as "HTTP Code", time::timestamp::date as "Date" from log group by status, time::timestamp::date order by time::timestamp::date;
-#select count(status), substring(status,1,3) as "HTTP Code", time::timestamp::date as "Date" from log group by status, time::timestamp::date order by time::timestamp::date;
 
-#select time::timestamp::date, count(g) * 100.0 / sum(count(*)) over()
-#from log
-#group by time::timestamp::date
-
-#SELECT time::timestamp::date, count(status) AS totalCode,
-#(select COUNT(substring(status,1,3)) FROM log WHERE substring(status,1,3) == 404) AS ErorCode
-#FROM log
-#GROUP BY time::timestamp::date;
 
 getPopularArticles()
 getPopularAuthors()
