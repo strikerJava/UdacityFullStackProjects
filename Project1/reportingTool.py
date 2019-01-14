@@ -8,15 +8,15 @@ def getPopularArticles():
     db = psycopg2.connect(database=DBNEWS)
     c = db.cursor()
     c.execute("SELECT articles.title, COUNT(path) FROM articles, log"
-              + "WHERE articles.slug = (SUBSTRING(path, 10 , LENGTH(path)-1))"
-              + "GROUP BY articles.title ORDER BY COUNT(path) DESC LIMIT 3;")
+              + " WHERE articles.slug = (SUBSTRING(path, 10 , LENGTH(path)-1))"
+              + " GROUP BY articles.title ORDER BY COUNT(path) DESC LIMIT 3;")
     result = c.fetchall()
-    print "The most popular articles"
-    print "------------------------"
-    print 'Article 1: ' + str(result[0][0]) + ' with ' + str(result[0][1]) + ' Hits!'
-    print 'Article 2: ' + str(result[1][0]) + ' with ' + str(result[1][1]) + ' Hits!'
-    print 'Article 3: ' + str(result[2][0]) + ' with ' + str(result[2][1]) + ' Hits!'
-    print "------------------------"
+    print ("The most popular articles")
+    print ("------------------------")
+    print ('Article 1: ' + str(result[0][0]) + ' with ' + str(result[0][1]) + ' Hits!')
+    print ('Article 2: ' + str(result[1][0]) + ' with ' + str(result[1][1]) + ' Hits!')
+    print ('Article 3: ' + str(result[2][0]) + ' with ' + str(result[2][1]) + ' Hits!')
+    print ("------------------------")
     db.close()
     print("Got the Articles")
 
@@ -25,18 +25,16 @@ def getPopularAuthors():
     print("Fetching the most popular authors")
     db = psycopg2.connect(database=DBNEWS)
     c = db.cursor()
-    c.execute("SELECT authors.name, COUNT(author) FROM authors, articles, log WHERE articles.slug ="
-            + "(SUBSTRING(path, 10 , LENGTH(path)-1)) AND authors.id = articles.author GROUP BY"
-            + "authors.name ORDER BY COUNT(path) DESC;")
+    c.execute("SELECT authors.name, COUNT(author) FROM authors, articles, log WHERE articles.slug = (SUBSTRING(path, 10 , LENGTH(path)-1)) AND authors.id = articles.author GROUP BY authors.name ORDER BY COUNT(path) DESC;")
     result = c.fetchall()
     db.close()
-    print "The most popular Authors"
-    print "------------------------"
-    print 'Author 1: ' + str(result[0][0]) + ' with ' + str(result[0][1]) + ' Hits!'
-    print 'Author 2: ' + str(result[1][0]) + ' with ' + str(result[1][1]) + ' Hits!'
-    print 'Author 3: ' + str(result[2][0]) + ' with ' + str(result[2][1]) + ' Hits!'
-    print 'Author 4: ' + str(result[3][0]) + ' with ' + str(result[3][1]) + ' Hits!'
-    print "------------------------"
+    print ("The most popular Authors")
+    print ("------------------------")
+    print ('Author 1: ' + str(result[0][0]) + ' with ' + str(result[0][1]) + ' Hits!')
+    print ('Author 2: ' + str(result[1][0]) + ' with ' + str(result[1][1]) + ' Hits!')
+    print ('Author 3: ' + str(result[2][0]) + ' with ' + str(result[2][1]) + ' Hits!')
+    print ('Author 4: ' + str(result[3][0]) + ' with ' + str(result[3][1]) + ' Hits!')
+    print ("------------------------")
 
 
 def getDaysWithErrors():
