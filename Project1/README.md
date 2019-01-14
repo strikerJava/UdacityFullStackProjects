@@ -1,8 +1,13 @@
+# README #
+This is the first submission for the 'Udacity Full Stack Web Development'. 
 
+### How do I use this? ###
+To use this python code, you need to bring this into the vagrant machine setup in the course. Download the vagrant file, then use 'vagrant up' to start it. 'vagrant ssh' to log into the machine.
+Then using the newsdata.sql file provided, load it in using 'psql -d news -f newsdata.sql'. Finally, use 'python reportingtool.py' to run the program and see what the results are. 
 
-Project 1 by Ryan Kanalley
-
-This is the first project for the Udacity Full Stack Web developers course. Contained in here is the answers to the three queries with minimal post processing.
-
-How do I run this project?
--You would run the project by taking this python file and placing it in a vagrant shared folder. after importing the database per instructions in the course, run the script. You will see your results printed out in the terminal. 
+### Design ###
+Using the default table.
+For the first query, the table is queried and then the top 3 articles are gotten in a 3d-array. The answers are then printed out 
+For the second query, the table is queried for the authors and hits based on a substring of the slug. Slugs that dont resolve are skipped. 
+For the third query, the results are seperated by the code and by the date. 
+The program then iterates through in groups of two and does the percentage calculation. 
