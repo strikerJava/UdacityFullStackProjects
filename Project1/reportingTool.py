@@ -1,3 +1,4 @@
+
 import psycopg2
 
 DBNEWS = "news"
@@ -47,9 +48,9 @@ def getDaysWithErrors():
 	x = 0
 	print ("------------------------")
 	while x < 60:
-		percent = long(( result[x+1][0] ) / ( result[x+1][0] + result[x][0]))
+		percent = float(( result[x+1][0] ) / ( result[x+1][0] + result[x][0]))
 		if percent > .01:
-			print(str(result[0][2]) + ' is over 1 percent')
+			print(str(result[0][2]) + ' is at ' + str(percent * 100) + ' percent')
 		x += 2
 	db.close()
 	print ("------------------------")
