@@ -1,0 +1,26 @@
+vagrant@vagrant:/vagrant/UdacityFullStackProjects/Project1$ python3 reportingTool.py 
+/home/vagrant/.local/lib/python3.5/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use "pip install psycopg2-binary" instead. For details see: <http://initd.org/psycopg/docs/install.html#binary-install-from-pypi>.
+  """)
+Fetching the top three articles
+The most popular articles
+------------------------
+Article 1: Candidate is jerk, alleges rival with 338647 Hits!
+Article 2: Bears love berries, alleges bear with 253801 Hits!
+Article 3: Bad things gone, say good people with 170098 Hits!
+------------------------
+ 
+Fetching the most popular authors
+The most popular Authors
+------------------------
+Author 1: Ursula La Multa with 507594 Hits!
+Author 2: Rudolf von Treppenwitz with 423457 Hits!
+Author 3: Anonymous Contributor with 170098 Hits!
+Author 4: Markoff Chaney with 84557 Hits!
+------------------------
+ 
+The days where there was more then 1% errors visiting the website
+------------------------
+2016-07-01: 2.26 % error rate.
+------------------------
+
+vagrant@vagrant:/vagrant/UdacityFullStackProjects/Project1$ 
