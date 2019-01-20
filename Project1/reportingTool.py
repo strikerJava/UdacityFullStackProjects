@@ -68,6 +68,7 @@ def getDaysWithErrors():
         x += 2
     db.close()
     print("------------------------")
+    print("")
 
 
 getPopularArticles()
