@@ -50,6 +50,19 @@ def reset():
     loginState['state'] = 0
     return "Reset Login State. Please return to main page; token state: %s" %loginState['state']
 
+def getAllItems():
+	print "Get all items"
+
+def makeNewItem():
+    print "Make new Item"
+
+def updateItem():
+    print "Update an item"
+	
+def deleteSingleItem():
+    print "delete a single Item"
+
+
 if __name__ == '__main__':
     app.secret_key = 'dummyKey'
     app.debug = True
