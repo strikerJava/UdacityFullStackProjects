@@ -31,9 +31,15 @@ def logout():
 def getAllDataBase():
     return "Database listing here"
 
+
+@app.route('/state')
+def status():
+    return "State: Token: %s" %loginState['state'] 
+	
 @app.route('/test')
 def reset():
-    return "Reset Login State. Please return to main page"
+    loginState['state'] = 0
+    return "Reset Login State. Please return to main page; token state: %s" %loginState['state']
 
 if __name__ == '__main__':
     app.secret_key = 'dummyKey'
