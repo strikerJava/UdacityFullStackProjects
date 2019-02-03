@@ -31,7 +31,16 @@ def logout():
 def getAllDataBase():
     return "Database listing here"
 
-
+@app.route('/getItemInfo/<int:idInt>', methods = ['GET'])
+def getSingleItemInfo(idInt):
+    #query DB here
+    return "itemDatabase get %s" % idInt 
+	
+@app.route('/deleteItem/<int:idInt>', methods = ['DELETE', 'POST'])
+def deleteSingleItem(idInt):
+    #delete DB entry here
+	return "delete Item from database: %s" %idInt
+	
 @app.route('/state')
 def status():
     return "State: Token: %s" %loginState['state'] 
