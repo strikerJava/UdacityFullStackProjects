@@ -1,11 +1,11 @@
-from flask import Flask
+from flask import Flask, render_template, redirect, request
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base
+from database_setup import Base, Inventory
 
 from flask import session as loginState #login sesson object
-import random, string
 
+import random, string
 app = Flask(__name__)
 engine = create_engine('sqlite:///inventory.db')
 Base.metadata.bind = engine
@@ -15,13 +15,15 @@ session = DBSession()
 
 @app.route('/')
 def startPoint():
-    return "Hello Flask"
+    return render_template('loginPage.html')
 
 @app.route('/oAuth')
 def oAuthLogIn():
-	sessionToken = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
-	loginState['state'] = sessionToken
-	return "Token: %s" %loginState['state']
+    sessionToken = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
+    loginState['state'] = sessionToken
+    return render_template('loginPage.html', STATE=sessionToken)
+    #return "Token: %s" %loginState['state'
+
 
 @app.route('/logOut')
 def logout():
@@ -34,7 +36,12 @@ def getAllDataBase():
 @app.route('/getItemInfo/<int:idInt>', methods = ['GET'])
 def getSingleItemInfo(idInt):
     #query DB here
-    return "itemDatabase get %s" % idInt 
+    object = session.query(Inventory).get(idInt)
+    output = ''
+    output += object.name
+    output += ' '
+    output += object.description
+    return output
 	
 @app.route('/deleteItem/<int:idInt>', methods = ['DELETE', 'POST'])
 def deleteSingleItem(idInt):
@@ -51,10 +58,21 @@ def reset():
     return "Reset Login State. Please return to main page; token state: %s" %loginState['state']
 
 def getAllItems():
+    #allitem = session.query(Base).all()
 	print "Get all items"
+    #print allitem
 
+@app.route('/addItemForm')
+def addItemForm():
+    return render_template('newItem.html')
+
+@app.route('/makeItem', methods = ['POST'])
 def makeNewItem():
-    print "Make new Item"
+    if request.method == 'POST':
+        newItem = Inventory(name = request.form['name'], price = .99, description = request.form['description'])
+    session.add(newItem)
+    session.commit()
+    return "OK"
 
 def updateItem():
     print "Update an item"
@@ -62,6 +80,9 @@ def updateItem():
 def deleteSingleItem():
     print "delete a single Item"
 
+def getItemByID():
+    print "Get item"
+    session.get
 
 if __name__ == '__main__':
     app.secret_key = 'dummyKey'

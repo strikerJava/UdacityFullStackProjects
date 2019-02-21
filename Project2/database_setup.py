@@ -15,6 +15,7 @@ class Inventory(Base):
     price = Column(Float)
     description = Column(String(500))
 
+
 engine = create_engine('sqlite:///inventory.db')
 
 Base.metadata.create_all(engine)
