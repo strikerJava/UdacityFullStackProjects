@@ -2,14 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Add new Item</title>
+    <title>Update Item</title>
 </head>
 <body>
-<form action="{{url_for('makeNewItem')}}" method = 'POST'>
-    Name: <input type="text" name="name" placeholder="Name of new Item(Required)" size="30"><br>
-    Price: <input type="text" name="price" placeholder="Price of New Item(Required)" size="30"><br>
-    Description: <input type="text" name="description"  placeholder="Description of New Item(Required)" size="30"><br>
-    Quantity: <input type="text" name="quantity"  placeholder="Quantity in Stock (default 0)" size="30"><br>
+<h2>Update Item</h2>
+<form action="{{url_for('commitChanges')}}" method = 'POST'>
+    ItemID:      <input type="text" name="ID" value={{updateItem.id}} size="10" readonly><br>
+    Name:        <input type="text" name="name" value={{updateItem.name}} placeholder="Name of new Item(Required)" size="30"><br>
+    Price:       <input type="text" name="price" value={{updateItem.price}} placeholder="Price of New Item(Required)" size="30"><br>
+    Description: <input type="text" name="description" value={{updateItem.description}} placeholder="Description of New Item(Required)" size="30"><br>
+    Quantity:    <input type="text" name="quantity"   value={{updateItem.quantity}} placeholder="Quantity in Stock (default 0)" size="30"><br>
     <select id="allCategories" onchange="CheckFieldState(this);">
         <option value="hideNew">Select a category for the item</option>
         <option value="addNew">Add New Categories</option>
@@ -31,6 +33,7 @@
       document.getElementById("catField").style.display = "none";
      }
    }
+
 </script>
 </body>
 </html>
