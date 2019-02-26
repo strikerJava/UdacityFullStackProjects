@@ -7,5 +7,21 @@
 <body>
 List all Categories
 <a href="/enter">Return to main search</a>
+<div id="MainBody"></div>
 </body>
+<script>
+   function addAllToLayout(){
+    elementDropDown = document.getElementById('MainBody');
+    var xed = {{categorieNames|tojson}};
+
+    for(x = 0; x < {{numberEntries}}; x++){
+
+     var newOpt = document.createElement('div');
+     console.log(xed[x] + " is the name")
+     newOpt.value = xed[x]
+     newOpt.innerHTML = xed[x]
+     elementDropDown.appendChild(newOpt);
+    }
+   }
+</script>
 </html>

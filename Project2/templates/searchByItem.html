@@ -10,12 +10,12 @@
     <a href="/enter">Return to main search</a>
 </div>
 <div align="center">
-<form>
-Search By Name:<input type="text" name="ID" size="75"><br>
+<form action="{{url_for('rerurnSearchResults')}}" method = 'POST'>
+Search By Name:<input type="text" name="ID" size="75"><input type="submit" value="Search"><br>
 </form>
 </div>
 <div id="allItems">
-    This is where Items would go
+    This is where a List of all Items would go
 </div>
 
 </body>

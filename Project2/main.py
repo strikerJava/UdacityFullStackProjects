@@ -72,9 +72,10 @@ def getItemsByCategory():
 def getAllItemsByName():
     return render_template('searchByItem.html')
 
-@app.route('/enter/Item/getResults')
-def retrunSearchResults():
-    return render_template('')
+@app.route('/enter/Item/getResults', methods = ['POST'])
+def rerurnSearchResults():
+
+    return render_template('ItemSearchResults.html')
 
 
 @app.route('/addItemForm')
