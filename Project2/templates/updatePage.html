@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <title>Update Item</title>
 </head>
-<body>
+<body onload="getAllCatOptions()">
+<div class="header">
+  <h1 align="center">Inventory Manager</h1>
+</div>
 <h2>Update Item</h2>
 <form action="{{url_for('commitChanges')}}" method = 'POST'>
     ItemID:      <input type="text" name="ID" value={{updateItem.id}} size="10" readonly><br>
@@ -34,6 +37,19 @@
      }
    }
 
+   function getAllCatOptions(){
+    elementDropDown = document.getElementById('allCategories');
+    var xed = {{categorieNames|tojson}};
+
+    for(x = 0; x < {{numberEntries}}; x++){
+
+     var newOpt = document.createElement('option');
+     console.log(xed[x] + " is the name")
+     newOpt.value = xed[x]
+     newOpt.innerHTML = xed[x]
+     elementDropDown.appendChild(newOpt);
+    }
+   }
 </script>
 </body>
 </html>

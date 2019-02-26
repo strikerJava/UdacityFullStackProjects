@@ -5,7 +5,8 @@ from database_setup import Base, Inventory, Category
 
 from flask import session as loginState #login sesson object
 
-import random, string
+import random, string, array
+
 app = Flask(__name__)
 engine = create_engine('sqlite:///inventory.db')
 Base.metadata.bind = engine
@@ -56,16 +57,36 @@ def deleteSingleItem(idInt):
 def status():
     return "State: Token: %s" %loginState['state'] 
 
-
+@app.route('/enter')
 def getAllItems():
-    #allitem = session.query(Base).all()
-	print "Get all items"
-    #print allitem
+    return render_template('mainDatabaseUsePoint.html')
+
+
+@app.route('/enter/Category')
+def getItemsByCategory():
+
+    return render_template('listAllCategories.html')
+
+
+@app.route('/enter/Item')
+def getAllItemsByName():
+    return render_template('searchByItem.html')
+
+@app.route('/enter/Item/getResults')
+def retrunSearchResults():
+    return render_template('')
 
 
 @app.route('/addItemForm')
 def addItemForm():
-    return render_template('newItem.html')
+    categories = session.query(Category).all()
+    numberEntries = session.query(Category).count()
+    categorieNames = [0] * numberEntries
+    x = 0
+    for row in categories:
+        categorieNames[x] = row.categoryName
+        x += 1
+    return render_template('newItem.html', categorieNames=categorieNames, numberEntries=numberEntries)
 
 
 @app.route('/addNewCategory')
@@ -93,17 +114,29 @@ def makeNewCategory():
 @app.route('/deleteItem/<int:idInt>')
 def deleteItemByID(idInt):
     itemToDelete = session.query(Inventory).get(idInt)
+    session.delete(itemToDelete)
+    session.commit()
+    return "Item Deleted."
 
 
-    return "garbage"
 @app.route('/itemInfo/<int:idInt>')
 def getItemFullInfo(idInt):
     return "empty"
 
+
 @app.route('/updateItem/<int:idInt>')
 def updateItem(idInt):
     updateItem = session.query(Inventory).get(idInt)
-    return render_template('updatePage.html', updateItem=updateItem)
+    categories = session.query(Category).all()
+    numberEntries = session.query(Category).count()
+    categorieNames = [0] * numberEntries
+    x = 0
+    for row in categories:
+        categorieNames[x] = row.categoryName
+        x += 1
+
+    return render_template('updatePage.html', updateItem=updateItem, categorieNames=categorieNames, numberEntries=numberEntries)
+
 
 @app.route('/itemUpdated', methods = ['POST'])
 def commitChanges():
@@ -115,11 +148,6 @@ def commitChanges():
     session.add(updateThisItem)
     session.commit()
     return "Updated Item"
-
-
-def deleteSingleItem():
-    print "delete a single Item"
-
 
 def getItemByID():
     print "Get item"

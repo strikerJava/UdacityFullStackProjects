@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <title>Add new Item</title>
 </head>
-<body>
+<body onload="getAllCatOptions()">
+<div class="header">
+  <h1 align="center">Inventory Manager</h1>
+</div>
+
 <form action="{{url_for('makeNewItem')}}" method = 'POST'>
     Name: <input type="text" name="name" placeholder="Name of new Item(Required)" size="30"><br>
     Price: <input type="text" name="price" placeholder="Price of New Item(Required)" size="30"><br>
@@ -30,6 +34,19 @@
       document.getElementById("hiddenField").style.display = "none";
       document.getElementById("catField").style.display = "none";
      }
+   }
+   function getAllCatOptions(){
+    elementDropDown = document.getElementById('allCategories');
+    var xed = {{categorieNames|tojson}};
+
+    for(x = 0; x < {{numberEntries}}; x++){
+
+     var newOpt = document.createElement('option');
+     console.log(xed[x] + " is the name")
+     newOpt.value = xed[x]
+     newOpt.innerHTML = xed[x]
+     elementDropDown.appendChild(newOpt);
+    }
    }
 </script>
 </body>
