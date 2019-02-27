@@ -112,6 +112,38 @@ def makeNewCategory():
     session.commit()
     return "new Category Added."
 
+@app.route('/enter/editCategories')
+def editCategoryPage():
+    categories = session.query(Category).all()
+    numberEntries = session.query(Category).count()
+    categorieNames = [0] * numberEntries
+    categorieIDs = [0] * numberEntries
+    categorieDescripts = [0] * numberEntries
+    x = 0
+    for categoryX in categories:
+        categorieNames[x] = categoryX.categoryName
+        categorieIDs[x] = categoryX.id
+        categorieDescripts[x] = categoryX.categoryDescript
+        x += 1
+    return render_template('editCategories.html', categorieNames=categorieNames, categorieIDs=categorieIDs, categorieDescripts=categorieDescripts)
+
+@app.route('/enter/editCategory/<int:idInt>')
+def editSingleCategory(idInt):
+    category = session.query(Category).get(idInt)
+    categoryName = category.categoryName
+    categoryDescript = category.categoryDescript
+    catID = category.id
+    return render_template('editCategory.html', category = category, categoryName=categoryName, categoryDescript=categoryDescript, catID=catID)
+
+@app.route('/enter/editCategory/commit', methods = ['POST'])
+def commitCatChange():
+    category = session.query(Category).get(request.form['ID'])
+    category.categoryName = request.form['name']
+    category.categoryDescript = request.form['Descript']
+    session.add(category)
+    session.commit()
+    return "Change Complete"
+
 @app.route('/deleteItem/<int:idInt>')
 def deleteItemByID(idInt):
     itemToDelete = session.query(Inventory).get(idInt)

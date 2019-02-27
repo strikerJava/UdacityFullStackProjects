@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body onload="addAllToLayout()">
+<div class="header">
+  <h1 align="center">Inventory Manager</h1>
+</div>
+Categories
+<div id="allCategories">
+
+</div>
+<script>
+
+     function addAllToLayout(){
+    elementDropDown = document.getElementById('allCategories');
+    var categoryNamesParsed = {{categoryName|tojson}};
+    var categoryIDsParsed = {{catID|tojson}};
+    var categorieDescriptsParsed = {{categoryDescript|tojson}};
+
+    for(x = 0; x < 5; x++){
+     console.log("Adding Item")
+     var newDiv = document.createElement('div');
+     newDiv.value = categoryNamesParsed[x];
+     newDiv.innerHTML = categoryNamesParsed[x];
+     elementDropDown.appendChild(newDiv);
+     var newADiv = document.createElement('a');
+     newADiv.setAttribute('href',"http://localhost:8080/enter/editCategory/" +categoryIDsParsed[x]);
+     newADiv.innerHTML = "Edit";
+     elementDropDown.appendChild(newADiv);
+    }
+   }
+</script>
+</body>
+</html>
