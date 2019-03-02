@@ -23,7 +23,6 @@ def oAuthLogIn():
     sessionToken = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in xrange(32))
     loginState['state'] = sessionToken
     return render_template('loginPage.html', STATE=sessionToken)
-    #return "Token: %s" %loginState['state'
 
 
 @app.route('/logOut')
@@ -58,7 +57,7 @@ def makeNewItem():
         newItem = Inventory(name = request.form['name'], price = request.form['price'], description = request.form['description'], categoryID = 0, quantity = request.form['quantity'])
     session.add(newItem)
     session.commit()
-    return "Added new item"\
+    return "Added new item"
 
 
 @app.route('/addNewCategory')
@@ -110,6 +109,11 @@ def rerurnSearchResults():
 @app.route('/itemInfo/<int:idInt>')
 def getItemFullInfo(idInt):
     return "empty"
+
+
+@app.route('/enter')
+def DataBaseMainPage():
+    return render_template('mainDatabaseUsePoint.html')
 
 ##################################################################
 
@@ -192,9 +196,6 @@ def deleteItemByID(idInt):
 
 ###########################################################################
 
-@app.route('/enter')
-def DataBaseMainPage():
-    return render_template('mainDatabaseUsePoint.html')
 
 
 
