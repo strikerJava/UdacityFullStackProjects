@@ -16,19 +16,21 @@
     <hr>
 </div>
 Categories
+<hr>
 <div id="allCategories">
+
 
 </div>
 <script>
 
      function addAllToLayout(){
     elementDropDown = document.getElementById('allCategories');
-    var categoryNamesParsed = {{categoryName|tojson}};
-    var categoryIDsParsed = {{catID|tojson}};
-    var categorieDescriptsParsed = {{categoryDescript|tojson}};
+     var categoryNamesParsed = {{categorieNames|tojson}};
+    var categoryIDsParsed = {{categorieIDs|tojson}};
+    var categorieDescriptsParsed = {{categorieDescripts|tojson}};
+    var y = {{count}};
 
-    for(x = 0; x < 5; x++){
-     console.log("Adding Item")
+    for(x = 0; x < y; x++){
      var newDiv = document.createElement('div');
      newDiv.value = categoryNamesParsed[x];
      newDiv.innerHTML = categoryNamesParsed[x];
@@ -37,6 +39,12 @@ Categories
      newADiv.setAttribute('href',"http://localhost:8080/enter/editCategory/" +categoryIDsParsed[x]);
      newADiv.innerHTML = "Edit";
      elementDropDown.appendChild(newADiv);
+     var newBDiv = document.createElement('a');
+     newBDiv.setAttribute('href',"http://localhost:8080/enter/deleteCategory/" +categoryIDsParsed[x]);
+     newBDiv.innerHTML = "Delete";
+     elementDropDown.appendChild(newBDiv);
+     var newDiv2 = document.createElement("HR");
+     elementDropDown.appendChild(newDiv2);
     }
    }
 </script>

@@ -94,8 +94,16 @@ def getSingleItemInfo(idInt):
 
 @app.route('/enter/Category')
 def getItemsByCategory():
-
-    return render_template('listAllCategories.html')
+    categories = session.query(Category).all()
+    numberEntries = session.query(Category).count()
+    categorieNames = [0] * numberEntries
+    categorieIDs = [0] * numberEntries
+    categorieDescripts = [0] * numberEntries
+    x = 0
+    for row in categories:
+        categorieNames[x] = row.categoryName
+        x += 1
+    return render_template('listAllCategories.html', categorieNames=categorieNames, numberEntries=numberEntries, categorieIDs=categorieIDs, categorieDescripts=categorieDescripts)
 
 @app.route('/database', methods = ['GET', 'POST'])
 def getAllDataBase():
@@ -176,7 +184,9 @@ def editCategoryPage():
         categorieIDs[x] = categoryX.id
         categorieDescripts[x] = categoryX.categoryDescript
         x += 1
-    return render_template('editCategories.html', categorieNames=categorieNames, categorieIDs=categorieIDs, categorieDescripts=categorieDescripts)
+
+    return render_template('editCategories.html', categorieNames=categorieNames, categorieIDs=categorieIDs, categorieDescripts=categorieDescripts, count=x)
+
 #############################################################
 
 ####################Delete Functions##############################
@@ -193,6 +203,12 @@ def deleteItemByID(idInt):
     session.commit()
     return "Item Deleted."
 
+@app.route('/enter/deleteCategory/<int:idInt>')
+def deleteCategory(idInt):
+    categoryToDelete= session.query(Category).get(idInt)
+    session.delete(categoryToDelete)
+    session.commit()
+    return render_template('categoryDeleted.html')
 
 ###########################################################################
 

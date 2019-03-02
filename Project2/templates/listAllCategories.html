@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Search By Categories</title>
 </head>
-<body>
+<body onload="addAllToLayout()">
 List all Categories
 <a href="/enter">Return to main search</a>
 <div id="MainBody"></div>
@@ -16,11 +16,28 @@ List all Categories
 
     for(x = 0; x < {{numberEntries}}; x++){
 
-     var newOpt = document.createElement('div');
-     console.log(xed[x] + " is the name")
+     var newOpt = document.createElement('MainBody');
      newOpt.value = xed[x]
      newOpt.innerHTML = xed[x]
      elementDropDown.appendChild(newOpt);
+    }
+   }
+   function addAllToLayoutMain(){
+    elementDropDown = document.getElementById('MainBody');
+    var categoryNamesParsed = {{categorieNames|tojson}};
+    var categoryIDsParsed = {{categorieIDs|tojson}};
+    var categorieDescriptsParsed = {{categorieDescripts|tojson}};
+
+    for(x = 0; x < 5; x++){
+     console.log("Adding Item")
+     var newDiv = document.createElement('div');
+     newDiv.value = categoryNamesParsed[x];
+     newDiv.innerHTML = categoryNamesParsed[x];
+     elementDropDown.appendChild(newDiv);
+     var newADiv = document.createElement('a');
+     newADiv.setAttribute('href',"http://localhost:8080/enter/editCategory/" +categoryIDsParsed[x]);
+     newADiv.innerHTML = "Edit";
+     elementDropDown.appendChild(newADiv);
     }
    }
 </script>
