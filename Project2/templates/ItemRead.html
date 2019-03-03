@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body onload="fillInfo()">
+<div class="header">
+<div  id="signinButton" align="right">
+   </br>Login Button to be placed here</div>
+    <div><a href="/"> <h1 align="center">Inventory Manager</h1> </a></div>
+    <div style="float:left; width:25%"><a href="/enter">Search DataBase</a> </div>
+    <div style="float:left; width:25%"><a href="/addNewCategory">Add a new Category</a> </div>
+    <div style="float:left; width:25%"><a href="/addItemForm">Add a new Item</a> </div>
+    <div style="float:left; width:25%"><a href="">Place Holder link</a> </div>
+    <hr>
+</div>
+<div id="main item">
+    <div id="name"></div>
+    <div id="price"></div>
+    <div id="description"></div>
+    <div id="quantity"></div>
+    <div id="categoryID"></div>
+</div>
+<button onclick="BackButton()">Go Back</button>
+
+</body>
+<script>
+    function fillInfo(){
+    var itemParse = {{ItemArray|tojson}};
+
+    document.getElementById('name').innerHTML = "Item name: " + itemParse[0];
+    document.getElementById('price').innerHTML = "Item price: " + itemParse[1];
+    document.getElementById('description').innerHTML = "Item Description: " + itemParse[2];
+    document.getElementById('quantity').innerHTML = "Item Quantity: " + itemParse[3];
+    document.getElementById('categoryID').innerHTML = "Category: " + itemParse[4];
+    }
+    function BackButton(){
+    window.history.back();
+    }
+</script>
+</html>

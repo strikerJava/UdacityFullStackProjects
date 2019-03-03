@@ -86,10 +86,17 @@ def getSingleItemInfo(idInt):
     #query DB here
     object = session.query(Inventory).get(idInt)
     output = ''
-    output += object.name
-    output += ' '
-    output += object.description
-    return output
+    ItemArray = [0] * 5
+    ItemArray[0] = object.name
+    ItemArray[1] = object.price
+    ItemArray[2] = object.description
+    ItemArray[3] = object.quantity
+    x = object.categoryID
+    catName= session.query(Category).get(x)
+    ItemArray[4] = catName.categoryName
+
+
+    return render_template('ItemRead.html' , ItemArray=ItemArray)
 
 
 @app.route('/enter/Category')
