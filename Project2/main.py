@@ -79,13 +79,20 @@ def makeNewCategory():
 
 @app.route('/enter/Item')
 def getAllItemsByName():
-    return render_template('searchByItem.html')
+    Array = session.query(Inventory).all()
+    size = session.query(Inventory).count()
+    itemNames = [0] * size
+    itemID = [0] * size
+    x = 0
+    for name in Array:
+        itemNames[x] = name.name
+        itemID[x] = name.id
+        x += 1
+    return render_template('searchByItem.html', itemNames=itemNames, itemID=itemID, count=x)
 
 @app.route('/enter/searchResult/<int:idInt>', methods = ['GET'])
 def getSingleItemInfo(idInt):
-    #query DB here
     object = session.query(Inventory).get(idInt)
-    output = ''
     ItemArray = [0] * 5
     ItemArray[0] = object.name
     ItemArray[1] = object.price
@@ -94,8 +101,6 @@ def getSingleItemInfo(idInt):
     x = object.categoryID
     catName= session.query(Category).get(x)
     ItemArray[4] = catName.categoryName
-
-
     return render_template('ItemRead.html' , ItemArray=ItemArray)
 
 

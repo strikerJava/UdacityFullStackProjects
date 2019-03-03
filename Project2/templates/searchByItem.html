@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
+<body onload="loadAllItems()">
 <div class="header">
 <div  id="signinButton" align="right">
    </br>Login Button to be placed here</div>
@@ -26,4 +26,26 @@ Search By Name:<input type="text" name="ID" size="75"><input type="submit" value
 </div>
 
 </body>
+<script>
+    function loadAllItems(){
+    elementDropDown = document.getElementById('allItems');
+
+    var itemNames = {{itemNames|tojson}};
+    var itemIds = {{itemID|tojson}};
+    var y = {{count|tojson}};
+
+    for(var x = 0; x < y; x++){
+
+
+     var newDiv = document.createElement('div');
+     newDiv.value = itemNames[x];
+     newDiv.innerHTML = itemNames[x];
+     elementDropDown.appendChild(newDiv);
+     var newADiv = document.createElement('a');
+     newADiv.setAttribute('href',"http://localhost:8080/enter/searchResult/" +itemIds[x]);
+     newADiv.innerHTML = "Read About This Item";
+     elementDropDown.appendChild(newADiv);
+      }
+    }
+</script>
 </html>
