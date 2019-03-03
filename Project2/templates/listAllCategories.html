@@ -4,40 +4,43 @@
     <meta charset="UTF-8">
     <title>Search By Categories</title>
 </head>
-<body onload="addAllToLayout()">
-List all Categories
-<a href="/enter">Return to main search</a>
-<div id="MainBody"></div>
+<body onload="addAllToLayoutMain()">
+<div  id="signinButton" align="right">
+   </br>Login Button to be placed here</div>
+    <div><a href="/"> <h1 align="center">Inventory Manager</h1> </a></div>
+    <div style="float:left; width:25%"><a href="/enter">Search DataBase</a> </div>
+    <div style="float:left; width:25%"><a href="/addNewCategory">Add a new Category</a> </div>
+    <div style="float:left; width:25%"><a href="/addItemForm">Add a new Item</a> </div>
+    <div style="float:left; width:25%"><a href="">Place Holder link</a> </div>
+    <hr>
+</div>
+<div align="center">List all Categories</div>
+<div align="center"><a href="/enter">Return to main search</a></div>
+<hr>
+<div id="MainBody" align = center></div>
 </body>
+<hr>
 <script>
-   function addAllToLayout(){
-    elementDropDown = document.getElementById('MainBody');
-    var xed = {{categorieNames|tojson}};
 
-    for(x = 0; x < {{numberEntries}}; x++){
-
-     var newOpt = document.createElement('MainBody');
-     newOpt.value = xed[x]
-     newOpt.innerHTML = xed[x]
-     elementDropDown.appendChild(newOpt);
-    }
-   }
    function addAllToLayoutMain(){
     elementDropDown = document.getElementById('MainBody');
     var categoryNamesParsed = {{categorieNames|tojson}};
     var categoryIDsParsed = {{categorieIDs|tojson}};
     var categorieDescriptsParsed = {{categorieDescripts|tojson}};
 
-    for(x = 0; x < 5; x++){
+    for(x = 0; x < {{numberEntries}}; x++){
      console.log("Adding Item")
      var newDiv = document.createElement('div');
      newDiv.value = categoryNamesParsed[x];
      newDiv.innerHTML = categoryNamesParsed[x];
      elementDropDown.appendChild(newDiv);
      var newADiv = document.createElement('a');
-     newADiv.setAttribute('href',"http://localhost:8080/enter/editCategory/" +categoryIDsParsed[x]);
-     newADiv.innerHTML = "Edit";
+     newADiv.setAttribute('href',"http://localhost:8080/enter/searchCat/" +categoryIDsParsed[x]);
+     newADiv.innerHTML = "Search";
      elementDropDown.appendChild(newADiv);
+     var newBreak = document.createElement('br');
+     elementDropDown.appendChild(newBreak);
+     elementDropDown.appendChild(newBreak);
     }
    }
 </script>

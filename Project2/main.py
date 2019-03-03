@@ -57,7 +57,7 @@ def makeNewItem():
         newItem = Inventory(name = request.form['name'], price = request.form['price'], description = request.form['description'], categoryID = 0, quantity = request.form['quantity'])
     session.add(newItem)
     session.commit()
-    return "Added new item"
+    return render_template('ItemMade.html')
 
 
 @app.route('/addNewCategory')
@@ -81,7 +81,7 @@ def makeNewCategory():
 def getAllItemsByName():
     return render_template('searchByItem.html')
 
-@app.route('/getItemInfo/<int:idInt>', methods = ['GET'])
+@app.route('/enter/searchResult/<int:idInt>', methods = ['GET'])
 def getSingleItemInfo(idInt):
     #query DB here
     object = session.query(Inventory).get(idInt)
@@ -105,6 +105,7 @@ def getItemsByCategory():
         x += 1
     return render_template('listAllCategories.html', categorieNames=categorieNames, numberEntries=numberEntries, categorieIDs=categorieIDs, categorieDescripts=categorieDescripts)
 
+
 @app.route('/database', methods = ['GET', 'POST'])
 def getAllDataBase():
     return "Database listing here"
@@ -114,9 +115,28 @@ def rerurnSearchResults():
 
     return render_template('ItemSearchResults.html')
 
-@app.route('/itemInfo/<int:idInt>')
+@app.route('/enter/searchCat/<int:idInt>')
 def getItemFullInfo(idInt):
-    return "empty"
+    items = session.query(Inventory).filter(Inventory.categoryID == idInt)
+    numberEntries = session.query(Category).count()
+    ids = [0] * numberEntries
+    names = [0] * numberEntries
+    descriptions = [0] * numberEntries
+    prices = session.query(Category).count()
+
+    quantitys = [0] * numberEntries
+    categoryIDs = [0] * numberEntries
+    x = 0
+    for itemX in items:
+        ids[x] = itemX.id
+        names[x] = itemX.name
+        descriptions[x] = itemX.description
+        quantitys[x] = itemX.quantity
+        x += 1
+
+
+    return render_template('catSearch.html', ids=ids, names=names, descriptions=descriptions, quantitys=quantitys, count=x)
+
 
 
 @app.route('/enter')
@@ -201,7 +221,7 @@ def deleteItemByID(idInt):
     itemToDelete = session.query(Inventory).get(idInt)
     session.delete(itemToDelete)
     session.commit()
-    return "Item Deleted."
+    return render_template('itemDeleted.html')
 
 @app.route('/enter/deleteCategory/<int:idInt>')
 def deleteCategory(idInt):
