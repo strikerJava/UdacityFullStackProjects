@@ -93,7 +93,7 @@ def getAllItemsByName():
 @app.route('/enter/searchResult/<int:idInt>', methods = ['GET'])
 def getSingleItemInfo(idInt):
     object = session.query(Inventory).get(idInt)
-    ItemArray = [0] * 5
+    ItemArray = [0] * 6
     ItemArray[0] = object.name
     ItemArray[1] = object.price
     ItemArray[2] = object.description
@@ -101,6 +101,7 @@ def getSingleItemInfo(idInt):
     x = object.categoryID
     catName= session.query(Category).get(x)
     ItemArray[4] = catName.categoryName
+    ItemArray[5] = object.id
     return render_template('ItemRead.html' , ItemArray=ItemArray)
 
 
@@ -222,10 +223,15 @@ def editCategoryPage():
 #############################################################
 
 ####################Delete Functions##############################
-@app.route('/deleteItem/<int:idInt>', methods = ['DELETE', 'POST'])
-def deleteSingleItem(idInt):
-    #delete DB entry here
-	return "delete Item from database: %s" %idInt
+@app.route('/deleteItem/confircmDelete', methods = ['DELETE', 'POST'])
+def deleteSingleItem():
+    idValue = request.form['hidden']
+    itemID = session.query(Inventory).get(idValue)
+
+
+    session.delete(itemID)
+    session.commit()
+    return "" + idValue
 
 
 @app.route('/deleteItem/<int:idInt>')

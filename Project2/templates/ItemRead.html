@@ -24,6 +24,11 @@
 </div>
 <button onclick="BackButton()">Go Back</button>
 
+<form action="{{url_for('deleteSingleItem')}}"  method = "POST">
+    <input id="hiddenField" name="hidden" type="text">
+    <input type="submit" value="delete">
+</form>
+
 </body>
 <script>
     function fillInfo(){
@@ -34,7 +39,11 @@
     document.getElementById('description').innerHTML = "Item Description: " + itemParse[2];
     document.getElementById('quantity').innerHTML = "Item Quantity: " + itemParse[3];
     document.getElementById('categoryID').innerHTML = "Category: " + itemParse[4];
+    var itemField =  document.getElementById('hiddenField');
+    itemField.value = itemParse[5];
+    itemField.innerHTML = xed[x]
     }
+
     function BackButton(){
     window.history.back();
     }

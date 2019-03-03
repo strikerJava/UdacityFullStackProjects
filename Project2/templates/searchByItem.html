@@ -17,7 +17,7 @@
     <a href="/enter">Return to main search</a>
 </div>
 <div align="center">
-<form action="{{url_for('rerurnSearchResults')}}" method = 'POST'>
+<form action="{{url_for('rerurnSearchResults')}}" value method = 'POST'>
 Search By Name:<input type="text" name="ID" size="75"><input type="submit" value="Search"><br>
 </form>
 </div>
@@ -45,6 +45,9 @@ Search By Name:<input type="text" name="ID" size="75"><input type="submit" value
      newADiv.setAttribute('href',"http://localhost:8080/enter/searchResult/" +itemIds[x]);
      newADiv.innerHTML = "Read About This Item";
      elementDropDown.appendChild(newADiv);
+     var newBDiv = document.createElement("BR");
+     elementDropDown.appendChild(newBDiv);
+
       }
     }
 </script>
