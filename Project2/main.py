@@ -119,6 +119,7 @@ def getItemsByCategory():
     x = 0
     for row in categories:
         categorieNames[x] = row.categoryName
+        categorieIDs[x] = row.id
         x += 1
     return render_template('listAllCategories.html', categorieNames=categorieNames, numberEntries=numberEntries, categorieIDs=categorieIDs, categorieDescripts=categorieDescripts)
 
@@ -150,7 +151,6 @@ def getItemFullInfo(idInt):
         descriptions[x] = itemX.description
         quantitys[x] = itemX.quantity
         x += 1
-
 
     return render_template('catSearch.html', ids=ids, names=names, descriptions=descriptions, quantitys=quantitys, count=x)
 
@@ -231,11 +231,9 @@ def editCategoryPage():
 def deleteSingleItem():
     idValue = request.form['hidden']
     itemID = session.query(Inventory).get(idValue)
-
-
     session.delete(itemID)
     session.commit()
-    return "" + idValue
+    return render_template('confirmDelete.html')
 
 
 @app.route('/deleteItem/<int:idInt>')
