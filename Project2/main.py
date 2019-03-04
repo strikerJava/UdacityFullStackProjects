@@ -54,7 +54,11 @@ def addItemForm():
 @app.route('/makeItem', methods = ['POST'])
 def makeNewItem():
     if request.method == 'POST':
-        newItem = Inventory(name = request.form['name'], price = request.form['price'], description = request.form['description'], categoryID = 0, quantity = request.form['quantity'])
+        nameCat = request.form.getlist("allCategories")
+        print(nameCat[0])
+        queryResults = session.query(Category).filter(Category.categoryName == nameCat[0]).first()
+        catID = queryResults.id
+        newItem = Inventory(name = request.form['name'], price = request.form['price'], description = request.form['description'], categoryID = catID, quantity = request.form['quantity'])
     session.add(newItem)
     session.commit()
     return render_template('ItemMade.html')

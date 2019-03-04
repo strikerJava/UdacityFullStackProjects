@@ -21,9 +21,10 @@
     Price: <input type="text" name="price" placeholder="Price of New Item(Required)" size="30"><br>
     Description: <input type="text" name="description"  placeholder="Description of New Item(Required)" size="30"><br>
     Quantity: <input type="text" name="quantity"  placeholder="Quantity in Stock (default 0)" size="30"><br>
-    <select id="allCategories" onchange="CheckFieldState(this);">
+
+    <select id="allCategories" name="allCategories" onchange="CheckFieldState(this);">
         <option value="hideNew">Select a category for the item</option>
-        <option value="addNew">Add New Categories</option>
+        <!--<option value="addNew">Add New Categories</option>-->
     </select>
     <div id="catField" style="display: none;" > Add a new Category</div>
     <input id="hiddenField" type="text" name= "newCat" style="display: none;" size="30">
