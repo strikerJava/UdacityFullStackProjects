@@ -16,6 +16,7 @@ class Category(Base):
     categoryDescript = Column(String(250))
     UniqueConstraint('categoryName')
 
+
 class Inventory(Base):
     __tablename__ = 'inventory'
 
@@ -25,6 +26,18 @@ class Inventory(Base):
     description = Column(String(500))
     quantity = Column(Integer)
     categoryID = Column(Integer, ForeignKey(Category.id), nullable=False)
+
+    @property
+    def serialize(self):
+        return{
+            'id': self.id,
+            'name': self.name,
+            'price': self.price,
+            'description': self.description,
+            'quantity': self.quantity,
+            'categoryID': self.categoryID,
+
+        }
 
 
 engine = create_engine('sqlite:///inventory.db')

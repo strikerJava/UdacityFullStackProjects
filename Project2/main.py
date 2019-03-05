@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, request, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Inventory, Category
@@ -108,6 +108,10 @@ def getSingleItemInfo(idInt):
     ItemArray[5] = object.id
     return render_template('ItemRead.html' , ItemArray=ItemArray)
 
+@app.route('/enter/searchResult/<int:idInt>/json')
+def jsonGetSingleItem(idInt):
+    object = session.query(Inventory).get(1)
+    return jsonify(Object=object.serialize)
 
 @app.route('/enter/Category')
 def getItemsByCategory():
