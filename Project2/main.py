@@ -110,7 +110,7 @@ def getSingleItemInfo(idInt):
 
 @app.route('/enter/searchResult/<int:idInt>/json')
 def jsonGetSingleItem(idInt):
-    object = session.query(Inventory).get(1)
+    object = session.query(Inventory).get(idInt)
     return jsonify(Object=object.serialize)
 
 @app.route('/enter/Category')
