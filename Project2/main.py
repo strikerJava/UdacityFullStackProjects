@@ -36,7 +36,8 @@ def logout():
 @app.route('/test')
 def reset():
     loginstate['state'] = 0
-    return "Reset Login State. Please return to main page; token state: %s" % loginstate['state']
+    return "Reset Login State. Please return to main page; token state:" \
+           " %s" % loginstate['state']
 
 
 @app.route('/state')
@@ -55,7 +56,8 @@ def additemform():
     for row in categories:
         categorienames[x] = row.categoryName
         x += 1
-    return render_template('newItem.html', categorieNames=categorienames, numberEntries=numberentries)
+    return render_template('newItem.html', categorieNames=categorienames,
+                           numberEntries=numberentries)
 
 
 @app.route('/makeItem', methods=['POST'])
@@ -63,10 +65,13 @@ def makenewitem():
     if request.method == 'POST':
         categoryname = request.form.getlist("allCategories")
         print(categoryname[0])
-        queryresults = session.query(Category).filter(Category.categoryName == categoryname[0]).first()
+        queryresults = session.query(Category)\
+            .filter(Category.categoryName == categoryname[0]).first()
         categoryid = queryresults.id
-        newitem = Inventory(name=request.form['name'], price=request.form['price'],
-                            description=request.form['description'], categoryID=categoryid,
+        newitem = Inventory(name=request.form['name'],
+                            price=request.form['price'],
+                            description=request.form['description'],
+                            categoryID=categoryid,
                             quantity=request.form['quantity'])
         session.add(newitem)
         session.commit()
@@ -83,7 +88,8 @@ def addnewcategoryform():
 @app.route('/makeNewCategory', methods=['POST'])
 def makenewcategory():
     if request.method == 'POST':
-        newcategory = Category(categoryName=request.form['name'], categoryDescript=request.form['categoryDescript'])
+        newcategory = Category(categoryName=request.form['name'],
+                               categoryDescript=request.form['categoryDescript'])
     else:
         return "404"
     session.add(newcategory)
@@ -107,7 +113,8 @@ def getallitemsbyname():
         itemnames[x] = name.name
         itemid[x] = name.id
         x += 1
-    return render_template('searchByItem.html', itemNames=itemnames, itemID=itemid, count=x)
+    return render_template('searchByItem.html',
+                           itemNames=itemnames, itemID=itemid, count=x)
 
 
 @app.route('/enter/searchResult/<int:idInt>', methods=['GET'])
@@ -143,8 +150,11 @@ def getitemsbycategory():
         categorie_names[x] = row.categoryName
         categorie_ids[x] = row.id
         x += 1
-    return render_template('listAllCategories.html', categorieNames=categorie_names, numberEntries=number_entries,
-                           categorieIDs=categorie_ids, categorieDescripts=categorie_descripts)
+    return render_template('listAllCategories.html',
+                           categorieNames=categorie_names,
+                           numberEntries=number_entries,
+                           categorieIDs=categorie_ids,
+                           categorieDescripts=categorie_descripts)
 
 
 @app.route('/enter/Item/getResults', methods=['POST'])
@@ -170,7 +180,8 @@ def getitemfullinfo(idint):
         quantitys[x] = itemX.quantity
         x += 1
 
-    return render_template('catSearch.html', ids=ids, names=names, descriptions=descriptions,
+    return render_template('catSearch.html', ids=ids, names=names,
+                           descriptions=descriptions,
                            quantitys=quantitys, count=x)
 
 
@@ -192,7 +203,8 @@ def updateitem(idint):
     for row in categories:
         category_names[x] = row.categoryName
         x += 1
-    return render_template('updatePage.html', updateItem=update_item, categorieNames=category_names,
+    return render_template('updatePage.html', updateItem=update_item,
+                           categorieNames=category_names,
                            numberEntries=number_entries)
 
 
@@ -214,8 +226,11 @@ def editsinglecategory(idint):
     category_name = category.categoryName
     category_descript = category.categoryDescript
     cat_id = category.id
-    return render_template('editCategory.html', category=category, categoryName=category_name,
-                           categoryDescript=category_descript, catID=cat_id)
+    return render_template('editCategory.html',
+                           category=category,
+                           categoryName=category_name,
+                           categoryDescript=category_descript,
+                           catID=cat_id)
 
 
 @app.route('/enter/editCategory/commit', methods=['POST'])
@@ -242,8 +257,11 @@ def editcategorypage():
         categorie_descripts[x] = categoryX.categoryDescript
         x += 1
 
-    return render_template('editCategories.html', categorieNames=categorie_names, categorieIDs=categorie_ids,
-                           categorieDescripts=categorie_descripts, count=x)
+    return render_template('editCategories.html',
+                           categorieNames=categorie_names,
+                           categorieIDs=categorie_ids,
+                           categorieDescripts=categorie_descripts,
+                           count=x)
 
 # end Update Functions
 
