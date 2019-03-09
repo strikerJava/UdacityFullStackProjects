@@ -117,7 +117,7 @@ def getallitemsbyname():
                            itemNames=itemnames, itemID=itemid, count=x)
 
 
-@app.route('/enter/searchResult/<int:idInt>', methods=['GET'])
+@app.route('/enter/searchResult/<int:idint>', methods=['GET'])
 def getsingleiteminfo(idint):
     inventory_object = session.query(Inventory).get(idint)
     item_array = [0] * 6
@@ -126,13 +126,17 @@ def getsingleiteminfo(idint):
     item_array[2] = inventory_object.description
     item_array[3] = inventory_object.quantity
     x = inventory_object.categoryID
-    cat_name = session.query(Category).get(x)
-    item_array[4] = cat_name.categoryName
+    try:
+        cat_name = session.query(Category).get(x)
+        item_array[4] = cat_name.categoryname
+    except:
+        item_array[4] = "deleted category"
+
     item_array[5] = inventory_object.id
     return render_template('ItemRead.html', ItemArray=item_array)
 
 
-@app.route('/enter/searchResult/<int:idInt>/json')
+@app.route('/enter/searchResult/<int:idint>/json')
 def jsongetsingleitem(idint):
     invintory_object = session.query(Inventory).get(idint)
     return jsonify(Object=invintory_object.serialize)
@@ -162,7 +166,7 @@ def rerurnsearchresults():
     return render_template('ItemSearchResults.html')
 
 
-@app.route('/enter/searchCat/<int:idInt>')
+@app.route('/enter/searchCat/<int:idint>')
 def getitemfullinfo(idint):
     items = session.query(Inventory).filter(Inventory.categoryID == idint)
     number_entries = session.query(Category).count()
@@ -193,7 +197,7 @@ def databasemainpage():
 
 
 # Update Functions
-@app.route('/updateItem/<int:idInt>')
+@app.route('/updateItem/<int:idint>')
 def updateitem(idint):
     update_item = session.query(Inventory).get(idint)
     categories = session.query(Category).all()
@@ -220,7 +224,7 @@ def commitchanges():
     return "Updated Item"
 
 
-@app.route('/enter/editCategory/<int:idInt>')
+@app.route('/enter/editCategory/<int:idint>')
 def editsinglecategory(idint):
     category = session.query(Category).get(idint)
     category_name = category.categoryName
@@ -277,7 +281,7 @@ def deletesingleitem():
     return render_template('confirmDelete.html')
 
 
-@app.route('/deleteItem/<int:idInt>')
+@app.route('/deleteItem/<int:idint>')
 def deleteitembyid(idint):
     itemtodelete = session.query(Inventory).get(idint)
     session.delete(itemtodelete)
@@ -285,7 +289,7 @@ def deleteitembyid(idint):
     return render_template('itemDeleted.html')
 
 
-@app.route('/enter/deleteCategory/<int:idInt>')
+@app.route('/enter/deleteCategory/<int:idint>')
 def deletecategory(idint):
     categorytodelete = session.query(Category).get(idint)
     session.delete(categorytodelete)
